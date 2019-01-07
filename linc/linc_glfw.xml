@@ -1,0 +1,49 @@
+<xml>
+	<files id="haxe">
+		<compilerflag value="-I${LINC_GLFW_PATH}/lib/include/"/>
+		<compilerflag value="-I${LINC_GLFW_PATH}/linc/"/>
+		
+		<compilerflag value="-DGLFW_INCLUDE_NONE" />
+		
+	</files>
+
+	<files id="linc_opengl">
+		<compilerflag value="-I${LINC_GLFW_PATH}/lib/include/"/>
+		<compilerflag value="-I${LINC_GLFW_PATH}/linc/"/>
+
+		<!-- Common files -->
+		<file name="${LINC_GLFW_PATH}lib/src/context.c" />
+		<file name="${LINC_GLFW_PATH}lib/src/init.c" />
+		<file name="${LINC_GLFW_PATH}lib/src/input.c" />
+		<file name="${LINC_GLFW_PATH}lib/src/monitor.c" />
+		<file name="${LINC_GLFW_PATH}lib/src/vulkan.c" />
+		<file name="${LINC_GLFW_PATH}lib/src/window.c" />
+
+		<section if="windows">
+			<compilerflag value="-DUNICODE"/>
+			<compilerflag value="-DWINVER=0x0501"/>
+			<compilerflag value="-D_GLFW_WIN32" />
+			
+			<file name="${LINC_GLFW_PATH}lib/src/win32_init.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/win32_joystick.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/win32_monitor.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/win32_time.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/win32_tls.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/win32_window.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/wgl_context.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/egl_context.c" />
+			
+			<!-- file name="${LINC_GLFW_PATH}lib/src/linc_empty.cpp" / -->
+			
+		</section>
+	</files>
+
+	<target id="haxe">
+		<section if="windows">
+			<lib name="Shell32.lib" />
+			<lib name="User32.lib" />
+			<lib name="Gdi32.lib" />
+		</section>
+	</target>
+
+</xml>
