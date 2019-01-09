@@ -4,9 +4,15 @@ import cpp.vm.Gc;
 import cpp.RawPointer;
 import cpp.Pointer;
 
+//### Current implementation can only exist in non-reflective classes. It also violates the C++ 
+// standart, as it assumes, that ``this`` pointer is a value of pointer to a different class.
+// Possible resolutions: (a) change to abstract, (b) change to container object, (c) find hxcpp 
+// examples, that implement something simmilar.
+
 @:keep
 @:include("GLFW/glfw3.h")
 @:native("GLFWwindow *")
+@:unreflective
 extern class Window
 {
 	@:native("glfwMakeContextCurrent")
@@ -153,4 +159,9 @@ extern class Window
 
 	public inline function makeCurrent() : Void return _internal_makeCurrent(this);
 	public inline function swapBuffers() : Void return _internal_swapBuffers(this);
+
+	public var isFocused(get, never) : Bool;
+	public inline function get_isFocused() : Bool return _i_getAttrib(this, GLFW.FOCUSED) != 0;
+	public var isVisible(get, never) : Bool;
+	public inline function get_isVisible() : Bool return _i_getAttrib(this, GLFW.VISIBLE) != 0;
 }

@@ -1,12 +1,25 @@
 package glfw;
 
 import cpp.ConstCharStar;
+
 @:enum abstract OpenGLProfile(Int) from Int to Int
 {
+	@:native("GLFW_OPENGL_ANY_PROFILE")
+	var Any : Int = 0;
 	@:native("GLFW_OPENGL_CORE_PROFILE")
-	var Core : Int;
+	var Core : Int = 0x00032001;
 	@:native("GLFW_OPENGL_COMPAT_PROFILE")
-	var Compat : Int;
+	var Compat : Int = 0x00032002;
+}
+
+@:enum abstract ClientApi(Int) from Int to Int
+{
+	@:native("GLFW_NO_API")
+	var None : Int = 0;
+	@:native("GLFW_OPENGL_API")
+	var OpenGL : Int = 0x00030001;
+	@:native("GLFW_OPENGL_ES_API")
+	var OpenGLES : Int = 0x00030002;
 }
 
 @:keep
@@ -31,9 +44,31 @@ extern class GLFW
 	public static var OPENGL_DEBUG_CONTEXT : Int;
 	@:native("GLFW_OPENGL_PROFILE")
 	public static var OPENGL_PROFILE : Int;
+	@:native("GLFW_SAMPLES")
+	public static var SAMPLES : Int;
+	@:native("GLFW_CLIENT_API")
+	public static var CLIENT_API : Int;
+
+	@:native("GLFW_FOCUSED")
+	public static var FOCUSED : Int;      
+	@:native("GLFW_ICONIFIED")
+	public static var ICONIFIED : Int;
+	@:native("GLFW_RESIZABLE")
+	public static var RESIZEABLE : Int;
+	@:native("GLFW_VISIBLE")
+	public static var VISIBLE : Int;
+	@:native("GLFW_DECORATED")
+	public static var DECORATED : Int;
+	@:native("GLFW_AUTO_ICONIFY")
+	public static var AUTO_ICONIFY : Int;
+	@:native("GLFW_FLOATING")
+	public static var FLOATING : Int;
+	@:native("GLFW_MAXIMIZED")
+	public static var MAXIMIZED : Int;
+
 
 	@:native("glfwInit")
-	public static function init() : Void {}
+	public static function init() : Int {}
 
 	@:native("glfwTerminate")
 	public static function terminate() : Void {}
