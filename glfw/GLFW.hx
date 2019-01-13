@@ -2,6 +2,8 @@ package glfw;
 
 import cpp.ConstCharStar;
 
+typedef ErrorCb = (Int, String) -> Void;
+
 @:enum abstract OpenGLProfile(Int) from Int to Int
 {
 	@:native("GLFW_OPENGL_ANY_PROFILE")
@@ -22,12 +24,29 @@ import cpp.ConstCharStar;
 	var OpenGLES : Int = 0x00030002;
 }
 
+@:unreflective
+@:allow(glfw.GLFW)
+private class GLFWErrorCallback
+{
+	static var errorCallback : ErrorCb = null;
+
+	@:nonVirtual
+	@:void
+	static function cppHandler(v : cpp.Int32, s : cpp.ConstCharStar) : Void
+	{
+		if (errorCallback != null) {
+			errorCallback(v, s.toString());
+		}
+	}
+}
+
 @:keep
 @:include("GLFW/glfw3.h")
 #if !display
 @:build(linc.Linc.touch())
 @:build(linc.Linc.xml("glfw"))
 #end
+@:unreflective
 extern class GLFW
 {
 	@:native("GLFW_CONTEXT_VERSION_MAJOR")
@@ -123,4 +142,19 @@ extern class GLFW
 	//@:native("glfwGetInstanceProcAddress")
 	//@:native("glfwGetPhysicalDevicePresentationSupport")
 	//@:native("glfwCreateWindowSurface")
+
+	// Error interface
+	@:native("glfwSetErrorCallback")
+	static function _i_setErrorCallback(fn: cpp.Callable< (cpp.Int32, cpp.ConstCharStar) -> Void >) : Void
+	{}
+
+	public inline static function setErrorCallback(fn : ErrorCb) : Void
+	{
+		GLFW._i_setErrorCallback(
+			if (fn != null) 
+				cpp.Function.fromStaticFunction(GLFWErrorCallback.cppHandler)
+			else
+				null);
+		GLFWErrorCallback.errorCallback = fn;
+	}
 }
