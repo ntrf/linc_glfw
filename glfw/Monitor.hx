@@ -4,9 +4,12 @@ import cpp.ConstCharStar;
 import cpp.RawPointer;
 import cpp.Pointer;
 
+//typedef GLFWmonitorfun = (Monitor, Int) -> cpp.Void;
+
 @:keep
 @:include("GLFW/glfw3.h")
 @:native("GLFWmonitor *")
+@:unreflective
 extern class Monitor
 {
 	@:native("glfwGetMonitors")

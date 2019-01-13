@@ -4,6 +4,23 @@ import cpp.vm.Gc;
 import cpp.RawPointer;
 import cpp.Pointer;
 
+// Callbacks
+typedef PosCb = (Window, cpp.Int32, cpp.Int32) -> cpp.Void;
+typedef SizeCb = (Window, cpp.Int32, cpp.Int32) -> cpp.Void;
+typedef CloseCb = (Window) -> cpp.Void;
+typedef RefreshCb = (Window) -> cpp.Void;
+typedef FocusCb = (Window, cpp.Int32) -> cpp.Void;
+typedef IconifyCb = (Window, cpp.Int32) -> cpp.Void;
+typedef FramebufferSizeCb = (Window, cpp.Int32, cpp.Int32) -> cpp.Void;
+typedef MouseButtonCb = (Window, cpp.Int32, cpp.Int32, cpp.Int32) -> cpp.Void;
+typedef CursorPosCb = (Window, cpp.Float64, cpp.Float64) -> cpp.Void;
+typedef CursorEnterCb = (Window, cpp.Int32) -> cpp.Void;
+typedef ScrollCb = (Window, cpp.Float64, cpp.Float64) -> cpp.Void;
+typedef KeyCb = (Window, cpp.Int32, cpp.Int32, cpp.Int32, cpp.Int32) -> cpp.Void;
+typedef CharCb = (Window, cpp.UInt32) -> cpp.Void;
+typedef CharModsCb = (Window, cpp.UInt32, cpp.Int32) -> cpp.Void;
+typedef DropCb = (Window, cpp.Int32, cpp.ConstCharStar) -> cpp.Void;
+
 //### Current implementation can only exist in non-reflective classes. It also violates the C++ 
 // standart, as it assumes, that ``this`` pointer is a value of pointer to a different class.
 // Possible resolutions: (a) change to abstract, (b) change to container object, (c) find hxcpp 
@@ -74,6 +91,7 @@ extern class Window
 
 	//### ???
 	//@:native("glfwSetWindowPosCallback")
+	//static function _i_setPosCallback(win : Window, fn : cpp.Function< (Window, Int, Int) -> Void >) : Void {}
 	//@:native("glfwSetWindowSizeCallback")
 	//@:native("glfwSetWindowCloseCallback")
 	//@:native("glfwSetWindowRefreshCallback")
@@ -164,4 +182,9 @@ extern class Window
 	public inline function get_isFocused() : Bool return _i_getAttrib(this, GLFW.FOCUSED) != 0;
 	public var isVisible(get, never) : Bool;
 	public inline function get_isVisible() : Bool return _i_getAttrib(this, GLFW.VISIBLE) != 0;
+
+	public inline function setPosCallback(fn : (Window, Int, Int) -> Void) : Void
+	{
+		
+	}
 }
