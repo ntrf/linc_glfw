@@ -1,2 +1,5 @@
 cpp/
 tmp/
+
+# this file contains machine-specific setup
+/.vscode/c_cpp_properties.json

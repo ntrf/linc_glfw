@@ -1,25 +1,25 @@
 package glfw;
 
-import cpp.vm.Gc;
+import cpp.NativeGc;
 import cpp.RawPointer;
 import cpp.Pointer;
 
 // Callbacks
-typedef PosCb = (Window, cpp.Int32, cpp.Int32) -> cpp.Void;
-typedef SizeCb = (Window, cpp.Int32, cpp.Int32) -> cpp.Void;
-typedef CloseCb = (Window) -> cpp.Void;
-typedef RefreshCb = (Window) -> cpp.Void;
-typedef FocusCb = (Window, cpp.Int32) -> cpp.Void;
-typedef IconifyCb = (Window, cpp.Int32) -> cpp.Void;
-typedef FramebufferSizeCb = (Window, cpp.Int32, cpp.Int32) -> cpp.Void;
-typedef MouseButtonCb = (Window, cpp.Int32, cpp.Int32, cpp.Int32) -> cpp.Void;
-typedef CursorPosCb = (Window, cpp.Float64, cpp.Float64) -> cpp.Void;
-typedef CursorEnterCb = (Window, cpp.Int32) -> cpp.Void;
-typedef ScrollCb = (Window, cpp.Float64, cpp.Float64) -> cpp.Void;
-typedef KeyCb = (Window, cpp.Int32, cpp.Int32, cpp.Int32, cpp.Int32) -> cpp.Void;
-typedef CharCb = (Window, cpp.UInt32) -> cpp.Void;
-typedef CharModsCb = (Window, cpp.UInt32, cpp.Int32) -> cpp.Void;
-typedef DropCb = (Window, cpp.Int32, cpp.ConstCharStar) -> cpp.Void;
+typedef WindowPosCb = (x: Int, y : Int) -> Void;
+typedef WindowSizeCb = (width : Int, height : Int) -> Void;
+typedef WindowCloseCb = () -> Void;
+typedef WindowRefreshCb = () -> Void;
+typedef WindowFocusCb = (focused : Int) -> Void;
+typedef WindowIconifyCb = (state : Int) -> Void;
+typedef FramebufferSizeCb = (width : Int, height : Int) -> Void;
+typedef MouseButtonCb = (button : Int, action : Int, mods : Int) -> Void;
+typedef CursorPosCb = (xpos : Float, ypos : Float) -> Void;
+typedef CursorEnterCb = (entered : Int) -> Void;
+typedef ScrollCb = (xscroll : Float, yscroll : Float) -> Void;
+typedef KeyCb = (key : Int, scancode : Int, action : Int, mods : Int) -> Void;
+typedef CharCb = (char : Int) -> Void;
+typedef CharModsCb = (char : Int, mods : Int) -> Void;
+typedef DropCb = (paths : Array< String >) -> Void;
 
 //### Current implementation can only exist in non-reflective classes. It also violates the C++ 
 // standart, as it assumes, that ``this`` pointer is a value of pointer to a different class.
@@ -90,22 +90,36 @@ extern class Window
 	static function _i_setUserPointer(win : Window, ptr : RawPointer<cpp.Void>) : Void {}
 
 	//### ???
-	//@:native("glfwSetWindowPosCallback")
-	//static function _i_setPosCallback(win : Window, fn : cpp.Function< (Window, Int, Int) -> Void >) : Void {}
-	//@:native("glfwSetWindowSizeCallback")
-	//@:native("glfwSetWindowCloseCallback")
-	//@:native("glfwSetWindowRefreshCallback")
-	//@:native("glfwSetWindowFocusCallback")
-	//@:native("glfwSetWindowIconifyCallback")
-	//@:native("glfwSetFramebufferSizeCallback")
-	//@:native("glfwSetKeyCallback")
-	//@:native("glfwSetCharCallback")
-	//@:native("glfwSetCharModsCallback")
-	//@:native("glfwSetMouseButtonCallback")
-	//@:native("glfwSetCursorPosCallback")
-	//@:native("glfwSetCursorEnterCallback")
-	//@:native("glfwSetScrollCallback")
-	//@:native("glfwSetDropCallback")
+	@:native("glfwSetWindowPosCallback")
+	static function _i_setCbWindowPos(win : Window, fn : cpp.Callable< (w:Window, x:cpp.Int32, y:cpp.Int32) -> Void >) : Void {}
+	@:native("glfwSetWindowSizeCallback")
+	static function _i_setCbWindowSize(win : Window, fn : cpp.Callable< (w:Window, x:cpp.Int32, y:cpp.Int32) -> Void >) : Void {}
+	@:native("glfwSetWindowCloseCallback")
+	static function _i_setCbWindowClose(win : Window, fn : cpp.Callable< (Window) -> Void >) : Void {}
+	@:native("glfwSetWindowRefreshCallback")
+	static function _i_setCbWindowRefresh(win : Window, fn : cpp.Callable< (Window) -> Void >) : Void {}
+	@:native("glfwSetWindowFocusCallback")
+	static function _i_setCbWindowFocus(win : Window, fn : cpp.Callable< (w : Window, f : cpp.Int32) -> Void >) : Void {}
+	@:native("glfwSetWindowIconifyCallback")
+	static function _i_setCbWindowIconify(win : Window, fn : cpp.Callable< (w : Window, a : cpp.Int32) -> Void >) : Void {}
+	@:native("glfwSetFramebufferSizeCallback")
+	static function _i_setCbFramebufferSize(win : Window, fn : cpp.Callable< (w: Window, a: cpp.Int32, b:cpp.Int32) -> Void >) : Void {}
+	@:native("glfwSetMouseButtonCallback")
+	static function _i_setCbMouseButton(win : Window, fn : cpp.Callable< (w : Window, a: cpp.Int32, b:cpp.Int32, c:cpp.Int32) -> Void >) : Void {}
+	@:native("glfwSetKeyCallback")
+	static function _i_setCbKey(win : Window, fn : cpp.Callable< (w : Window, a: cpp.Int32, b:cpp.Int32, c:cpp.Int32, d:cpp.Int32) -> Void >) : Void {}
+	@:native("glfwSetCharCallback")
+	static function _i_setCbChar(win : Window, fn : cpp.Callable< (w : Window, a: cpp.UInt32) -> Void >) : Void {}
+	@:native("glfwSetCharModsCallback")
+	static function _i_setCbCharMods(win : Window, fn : cpp.Callable< (w : Window, a: cpp.UInt32, b:cpp.Int32) -> Void >) : Void {}
+	@:native("glfwSetCursorPosCallback")
+	static function _i_setCbCursorPos(win : Window, fn : cpp.Callable< (w : Window, a: cpp.Float64, b:cpp.Float64) -> Void >) : Void {}
+	@:native("glfwSetCursorEnterCallback")
+	static function _i_setCbCursorEnter(win : Window, fn : cpp.Callable< (w : Window, a: cpp.Int32) -> Void >) : Void {}
+	@:native("glfwSetScrollCallback")
+	static function _i_setCbScroll(win : Window, fn : cpp.Callable< (w : Window, a: cpp.Float64, b:cpp.Float64) -> Void >) : Void {}
+	@:native("glfwSetDropCallback")
+	static function _i_setCbDrop(win : Window, fn : cpp.Callable< (w : Window, a: cpp.Int32, b:cpp.RawPointer< cpp.ConstCharStar >) -> Void >) : Void {}
 
 
 	//@:native("glfwGetInputMode")
@@ -126,14 +140,16 @@ extern class Window
 	private static function _internal_createWindow(width : Int, height : Int, title : cpp.ConstCharStar, 
 		monitor : cpp.RawPointer<cpp.Void>, share : cpp.RawPointer<cpp.Void>) : Window
 	{ return null; }
-	
+
 	public inline static function createWindow(width : Int, height : Int, title : String) : Window
 	{
 		var ptr = _internal_createWindow(width, height, title, null, null);
+		Listener.create(ptr);
 		return ptr;
 	}
 
 	public inline function destroy() : Void {
+		Listener.destroy(this);
 		_i_destroy(this);
 	}
 
@@ -183,8 +199,19 @@ extern class Window
 	public var isVisible(get, never) : Bool;
 	public inline function get_isVisible() : Bool return _i_getAttrib(this, GLFW.VISIBLE) != 0;
 
-	public inline function setPosCallback(fn : (Window, Int, Int) -> Void) : Void
-	{
-		
-	}
+	public inline function setPosCallback(fn : WindowPosCb) : Void { ListenerMacro.assign("WindowPos"); }
+	public inline function setSizeCallback(fn : WindowSizeCb) : Void { ListenerMacro.assign("WindowSize"); }
+	public inline function setCloseCallback(fn : WindowCloseCb) : Void { ListenerMacro.assign("WindowClose"); }
+	public inline function setRefreshCallback(fn : WindowRefreshCb) : Void { ListenerMacro.assign("WindowRefresh"); }
+	public inline function setFocusCallback(fn : WindowFocusCb) : Void { ListenerMacro.assign("WindowFocus"); }
+	public inline function setIconifyCallback(fn : WindowIconifyCb) : Void { ListenerMacro.assign("WindowIconify"); }
+	public inline function setFramebufferSizeCallback(fn : FramebufferSizeCb) : Void { ListenerMacro.assign("FramebufferSize"); }
+	public inline function setMouseButtonCallback(fn : MouseButtonCb) : Void { ListenerMacro.assign("MouseButton"); }
+	public inline function setCursorPosCallback(fn : CursorPosCb) : Void { ListenerMacro.assign("CursorPos"); }
+	public inline function setCursorEnterCallback(fn : CursorEnterCb) : Void { ListenerMacro.assign("CursorEnter"); }
+	public inline function setScrollCallback(fn : ScrollCb) : Void { ListenerMacro.assign("Scroll"); }
+	public inline function setKeyCallback(fn : KeyCb) : Void { ListenerMacro.assign("Key"); }
+	public inline function setCharCallback(fn : CharCb) : Void { ListenerMacro.assign("Char"); }
+	public inline function setCharModsCallback(fn : CharModsCb) : Void { ListenerMacro.assign("CharMods"); }
+	public inline function setDropCallback(fn : DropCb) : Void { ListenerMacro.assign("Drop"); }
 }
