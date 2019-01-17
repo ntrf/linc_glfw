@@ -198,6 +198,10 @@ extern class Window
 	public inline function get_isFocused() : Bool return _i_getAttrib(this, GLFW.FOCUSED) != 0;
 	public var isVisible(get, never) : Bool;
 	public inline function get_isVisible() : Bool return _i_getAttrib(this, GLFW.VISIBLE) != 0;
+	public var isIconified(get, never) : Bool;
+	public inline function get_isIconified() : Bool return _i_getAttrib(this, GLFW.ICONIFIED) != 0;
+	public var isMaximized(get, never) : Bool;
+	public inline function get_isMaximized() : Bool return _i_getAttrib(this, GLFW.MAXIMIZED) != 0;
 
 	public inline function setPosCallback(fn : WindowPosCb) : Void { ListenerMacro.assign("WindowPos"); }
 	public inline function setSizeCallback(fn : WindowSizeCb) : Void { ListenerMacro.assign("WindowSize"); }
