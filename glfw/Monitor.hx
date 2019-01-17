@@ -28,7 +28,7 @@ extern class Monitor
 	public static function getName(mon : Monitor) : ConstCharStar { return null; }
 	
 //	@:native("glfwSetMonitorCallback")
-//	static function setCallback(mon : Monitor, fn : ???) : ??? { return null; }
+//	static function setCallback(fn : ???) : ??? { return null; }
 
 //	@:native("glfwGetVideoModes")
 //	static function getVideoModes(mon : Monitor, count : RawPointer< Int >) : RawPointer< VideoMode > { return null; }
