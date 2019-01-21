@@ -138,7 +138,9 @@ extern class GLFW
 	//    not sure how i'm going to hande it
 	@:native("glfwVulkanSupported")
 	public static function isVulkanSupported() : Int {}
-	//@:native("glfwGetRequiredInstanceExtensions")
+	@:native("glfwGetRequiredInstanceExtensions")
+	public static function getRequiredInstanceExtensions(count : cpp.RawPointer<cpp.UInt32>) : cpp.RawPointer<ConstCharStar> {}
+
 	//@:native("glfwGetInstanceProcAddress")
 	//@:native("glfwGetPhysicalDevicePresentationSupport")
 	//@:native("glfwCreateWindowSurface")
