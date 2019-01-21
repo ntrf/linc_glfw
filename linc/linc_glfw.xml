@@ -34,6 +34,19 @@
 			<file name="${LINC_GLFW_PATH}lib/src/wgl_context.c" />
 			<file name="${LINC_GLFW_PATH}lib/src/egl_context.c" />	
 		</section>
+		<section id="mac">
+			<compilerflag value="-D_GLFW_COCOA" />
+			<compilerflag value="-D_GLFW_USE_RETINA" />
+			<compilerflag value="-fno-common" />
+			
+			<file name="${LINC_GLFW_PATH}lib/src/cocoa_init.m" />
+			<file name="${LINC_GLFW_PATH}lib/src/cocoa_joystick.m" />
+			<file name="${LINC_GLFW_PATH}lib/src/cocoa_monitor.m" />
+			<file name="${LINC_GLFW_PATH}lib/src/cocoa_window.m" />
+			<file name="${LINC_GLFW_PATH}lib/src/cocoa_time.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/posix_tls.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/nsgl_context.m" />
+		</section>
 	</files>
 
 	<target id="haxe">
@@ -41,6 +54,13 @@
 			<lib name="Shell32.lib" />
 			<lib name="User32.lib" />
 			<lib name="Gdi32.lib" />
+		</section>
+		<section if="mac">
+			<vflag name="-framework" value="Cocoa" />
+			<vflag name="-framework" value="IOKit" />
+			<vflag name="-framework" value="CoreFoundation" />
+			<vflag name="-framework" value="CoreVideo" />
+			<vflag name="-framework" value="OpenGL" />
 		</section>
 	</target>
 
