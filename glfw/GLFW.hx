@@ -40,6 +40,22 @@ private class GLFWErrorCallback
 	}
 }
 
+#if GLFW_INCLUDE_VULKAN
+@:native("VkInstance")
+@:unreflective
+extern class VkInstance {}
+
+@:native("VkPhysicalDevice")
+@:unreflective
+extern class VkPhysicalDevice {}
+
+@:native("VkSurfaceKHR")
+@:unreflective
+extern class VkSurfaceKHR {}
+
+typedef VkResult = Int;
+#end
+
 @:keep
 @:include("GLFW/glfw3.h")
 #if !display
@@ -141,9 +157,20 @@ extern class GLFW
 	@:native("glfwGetRequiredInstanceExtensions")
 	public static function getRequiredInstanceExtensions(count : cpp.RawPointer<cpp.UInt32>) : cpp.RawPointer<ConstCharStar> {}
 
+#if GLFW_INCLUDE_VULKAN
 	//@:native("glfwGetInstanceProcAddress")
-	//@:native("glfwGetPhysicalDevicePresentationSupport")
-	//@:native("glfwCreateWindowSurface")
+	@:native("glfwGetPhysicalDevicePresentationSupport")
+	public static function getPhysicalDevicePresentationSupport(
+		instance : VkInstance, 
+		device : VkPhysicalDevice,
+		queuefamily : cpp.UInt32) : Int {}
+	@:native("glfwCreateWindowSurface")
+	public static function createWindowSurface(
+		instance : VkInstance, 
+		window : Window, 
+		allocator : cpp.RawConstPointer< cpp.Void >,
+		surface : cpp.RawPointer< VkSurfaceKHR >) : VkResult {}; 
+#end
 
 	// Error interface
 	@:native("glfwSetErrorCallback")
