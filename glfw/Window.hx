@@ -32,6 +32,17 @@ typedef DropCb = (paths : Array< String >) -> Void;
 @:unreflective
 extern class Window
 {
+	@:native("GLFW_CURSOR")
+	public static var CURSOR_MODE : Int;
+
+	@:native("GLFW_CURSOR_NORMAL")
+	public static var CURSOR_NORMAL : Int;
+	@:native("GLFW_CURSOR_HIDDEN")
+	public static var CURSOR_HIDDEN : Int;
+	@:native("GLFW_CURSOR_DISABLED")
+	public static var CURSOR_DISABLED : Int;
+
+
 	@:native("glfwMakeContextCurrent")
 	static function _internal_makeCurrent(win : Window) : Void;
 
@@ -122,13 +133,20 @@ extern class Window
 	static function _i_setCbDrop(win : Window, fn : cpp.Callable< (w : Window, a: cpp.Int32, b:cpp.RawPointer< cpp.ConstCharStar >) -> Void >) : Void;
 
 
-	//@:native("glfwGetInputMode")
-	//@:native("glfwSetInputMode")
-	//@:native("glfwGetKeyName")
-	//@:native("glfwGetKey")
-	//@:native("glfwGetMouseButton")
-	//@:native("glfwGetCursorPos")
-	//@:native("glfwSetCursorPos")
+	@:native("glfwGetInputMode")
+	static function _i_getInputMode(window : Window, mode : Int) : Int;
+	@:native("glfwSetInputMode")
+	static function _i_setInputMode(window : Window, mode : Int, value : Int) : Void;
+	@:native("glfwGetKeyName")
+	static function getKeyName(key : key, scancode : Int) : cpp.ConstCharStar;
+	@:native("glfwGetKey")
+	static function _i_getKey(window : Window, key : Int) : Int;
+	@:native("glfwGetMouseButton")
+	static function _i_getMouseButton(window : Window, button : Int) : Int;
+	@:native("glfwGetCursorPos")
+	static function _i_getCursorPos(window : Window, x : RawPointer<cpp.Float64>, y : RawPointer<cpp.Float64>) : Void;
+	@:native("glfwSetCursorPos")
+	static function _i_setCursorPos(window : Window, x : cpp.Float64, y : cpp.Float64) : Void;
 
 	//@:native("glfwSetCursor")
 
@@ -186,6 +204,23 @@ extern class Window
 			Pointer.arrayElem(res, 1).raw);
 		return res;
 	}
+
+	public inline function getKey(key : Int) : Int { return _i_getKey(this, key); }
+	public inline function getMouseButton(button : Int) : Int { return _i_getMouseButton(this, button); }
+	public inline function getCursorPos() : Array< Float > {
+		var res : Array< cpp.Float64 > = [0.0, 0.0];
+		_i_getCursorPos(this, 
+			Pointer.arrayElem(res, 0).raw,
+			Pointer.arrayElem(res, 1).raw);
+		var res2 : Array< Float > = [ res[0], res[1] ];
+		return res2;
+	}
+	public inline function setCursorPos(x : Float, y : Float) : Void {
+		_i_setCursorPos(this, x, y);
+	}
+
+	public inline function getInputMode(mode : Int) : Int return _i_getInputMode(this, mode);
+	public inline function setInputMode(mode : Int, value : Int) : Void { _i_setInputMode(this, mode, value); }
 
 	public inline function shouldClose() : Bool return _internal_shouldClose(this) != 0;
 	public inline function setShouldClose(v : Bool) : Void { _internal_setShouldClose(this, v ? 0 : 1); }
