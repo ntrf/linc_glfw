@@ -7,13 +7,13 @@ typedef ErrorCb = (Int, String) -> Void;
 @:enum abstract KeyState(Int) from Int to Int
 {
 	/** The key or mouse button was released. */
-	var GLFW_RELEASE = 0;
+	var RELEASE = 0;
 	/** The key or mouse button was pressed. */
-	var GLFW_PRESS = 1;
+	var PRESS = 1;
 	/** The key was held down until it repeated. */
-	var GLFW_REPEAT = 2;
+	var REPEAT = 2;
 
-	public function isDown() return this != GLFW_RELEASE;
+	public function isDown() return this != RELEASE;
 }
 
 @:enum abstract Key(Int) from Int to Int
