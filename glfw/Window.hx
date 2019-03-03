@@ -35,10 +35,21 @@ extern class Window
 	@:native("GLFW_CURSOR")
 	public static var CURSOR_MODE : Int;
 
+	/**
+	 * Makes the cursor visible and behaving normally.
+	 */
 	@:native("GLFW_CURSOR_NORMAL")
 	public static var CURSOR_NORMAL : Int;
+	/**
+	 * Makes the cursor invisible when it is over the client area of the window but does not 
+	 * restrict the cursor from leaving.
+	 */
 	@:native("GLFW_CURSOR_HIDDEN")
 	public static var CURSOR_HIDDEN : Int;
+	/**
+	 * Hides and grabs the cursor, providing virtual and unlimited cursor movement. This is useful
+	 * for implementing for example 3D camera controls.
+	 */
 	@:native("GLFW_CURSOR_DISABLED")
 	public static var CURSOR_DISABLED : Int;
 
