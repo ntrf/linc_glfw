@@ -149,7 +149,7 @@ extern class Window
 	@:native("glfwSetInputMode")
 	static function _i_setInputMode(window : Window, mode : Int, value : Int) : Void;
 	@:native("glfwGetKeyName")
-	static function getKeyName(key : key, scancode : Int) : cpp.ConstCharStar;
+	static function getKeyName(key : GLFW.Key, scancode : Int) : cpp.ConstCharStar;
 	@:native("glfwGetKey")
 	static function _i_getKey(window : Window, key : Int) : Int;
 	@:native("glfwGetMouseButton")
