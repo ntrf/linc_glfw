@@ -256,6 +256,29 @@ extern class GLFW
 	@:native("GLFW_MAXIMIZED")
 	public static var MAXIMIZED : Int;
 
+	@:native("GLFW_RED_BITS")
+	public static var RED_BITS : Int;
+	@:native("GLFW_GREEN_BITS")
+	public static var GREEN_BITS : Int;
+	@:native("GLFW_BLUE_BITS")
+	public static var BLUE_BITS : Int;
+	@:native("GLFW_ALPHA_BITS")
+	public static var ALPHA_BITS : Int;
+	@:native("GLFW_DEPTH_BITS")
+	public static var DEPTH_BITS : Int;
+	@:native("GLFW_STENCIL_BITS")
+	public static var STENCIL_BITS : Int;
+
+	@:native("GLFW_STEREO")
+	public static var STEREO : Int;
+	@:native("GLFW_SAMPLES")
+	public static var SAMPLES : Int;
+	@:native("GLFW_SRGB_CAPABLE")
+	public static var SRGB_CAPABLE : Int;
+	@:native("GLFW_REFRESH_RATE")
+	public static var REFRESH_RATE : Int;
+	@:native("GLFW_DOUBLEBUFFER")
+	public static var DOUBLEBUFFER : Int;
 
 	@:native("glfwInit")
 	public static function init() : Int;
