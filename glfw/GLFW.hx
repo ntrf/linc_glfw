@@ -234,8 +234,6 @@ extern class GLFW
 	public static var OPENGL_DEBUG_CONTEXT : Int;
 	@:native("GLFW_OPENGL_PROFILE")
 	public static var OPENGL_PROFILE : Int;
-	@:native("GLFW_SAMPLES")
-	public static var SAMPLES : Int;
 	@:native("GLFW_CLIENT_API")
 	public static var CLIENT_API : Int;
 
