@@ -22,6 +22,7 @@
 	<files id="linc_glfw">
 		<compilerflag value="-I${LINC_GLFW_PATH}/lib/include/"/>
 		<compilerflag value="-I${LINC_GLFW_PATH}/linc/"/>
+		<compilerflag value="-D_GLFW_USE_HYBRID_HPG" if="GLFW_USE_HYBRID_HPG" />
 
 		<!-- Common files -->
 		<file name="${LINC_GLFW_PATH}lib/src/context.c" />
