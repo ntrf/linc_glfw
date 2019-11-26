@@ -249,7 +249,7 @@ extern class Window
 	public inline function setInputMode(mode : Int, value : Int) : Void { _i_setInputMode(this, mode, value); }
 
 	public inline function shouldClose() : Bool return _internal_shouldClose(this) != 0;
-	public inline function setShouldClose(v : Bool) : Void { _internal_setShouldClose(this, v ? 0 : 1); }
+	public inline function setShouldClose(v : Bool) : Void { _internal_setShouldClose(this, cast v); }
 
 	public inline function makeCurrent() : Void return _internal_makeCurrent(this);
 	public inline function swapBuffers() : Void return _internal_swapBuffers(this);
