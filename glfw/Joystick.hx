@@ -19,7 +19,12 @@ import cpp.ConstCharStar;
 import cpp.RawPointer;
 import cpp.Pointer;
 
-//typedef GLFWjoystickfun = (Int, Int) -> cpp.Void;
+@:enum abstract JoyEvent(Int) from Int to Int {
+	var CONNECTED = 0x00040001;
+	var DISCONNECTED = 0x00040002;
+}
+
+typedef JoystickCb = (id:Int, event:JoyEvent) -> cpp.Void;
 
 @:keep
 @:include("GLFW/glfw3.h")
