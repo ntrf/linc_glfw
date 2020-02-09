@@ -28,19 +28,19 @@ import cpp.Pointer;
 extern class Monitor
 {
 	@:native("glfwGetMonitors")
-	static function _i_getMonitors(count : RawPointer< Int >) : RawPointer<Monitor> { return null; }
+	static function _i_getMonitors(count : RawPointer< Int >) : RawPointer<Monitor>;
 
 	@:native("glfwGetPrimaryMonitor")
-	public static function getPrimary() : Monitor { return null; }
+	public static function getPrimary() : Monitor;
 
 	@:native("glfwGetMonitorPos")
-	static function _i_getPos(mon : Monitor, xpos : RawPointer< Int >, ypos : RawPointer< Int >) : Void {}
+	static function _i_getPos(mon : Monitor, xpos : RawPointer< Int >, ypos : RawPointer< Int >) : Void;
 	
 	@:native("glfwGetMonitorPhysicalSize")
-	static function _i_getPhysicalSize(mon : Monitor, xpos : RawPointer< Int >, ypos : RawPointer< Int >) : Void {}
+	static function _i_getPhysicalSize(mon : Monitor, xpos : RawPointer< Int >, ypos : RawPointer< Int >) : Void;
 
 	@:native("glfwGetMonitorName")
-	public static function getName(mon : Monitor) : ConstCharStar { return null; }
+	public static function getName(mon : Monitor) : ConstCharStar;
 	
 //	@:native("glfwSetMonitorCallback")
 //	static function setCallback(fn : ???) : ??? { return null; }
@@ -51,7 +51,7 @@ extern class Monitor
 //	static function _i_getVideoMode(mon : Monitor) : RawPointer< VideoMode > return null;
 
 	@:native("glfwSetGamma")
-	public static function _i_setGamma(mon : Monitor, gamma : cpp.Float32) : Void { }
+	public static function _i_setGamma(mon : Monitor, gamma : cpp.Float32) : Void;
 //	@:native("glfwGetGammaRamp")
 //	public static function _i_getGammaRamp(mon : Monitor) : RawPointer<GammaRamp> { return null; }
 //	@:native("glfwSetGammaRamp")

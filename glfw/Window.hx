@@ -15,6 +15,7 @@
  */
 package glfw;
 
+import cpp.ConstCharStar;
 import cpp.NativeGc;
 import cpp.RawPointer;
 import cpp.Pointer;
@@ -110,13 +111,17 @@ extern class Window
 	@:native("glfwGetFramebufferSize")
 	static function _i_getFramebufferSize(win : Window, width : RawPointer<Int>, height : RawPointer<Int>) : Void;
 
-	//@:native("glfwSetWindowTitle")
+	@:native("glfwSetWindowTitle")
+	static function _i_setWindowTitle(window : Window, title : ConstCharStar) : Void;
 	//@:native("glfwSetWindowIcon")
-	//@:native("glfwSetWindowSizeLimits")
+	@:native("glfwSetWindowSizeLimits")
+	static function _i_setWindowSizeLimits(window : Window, minwidth : Int, minheight : Int, maxwidth : Int, maxheight : Int) : Void;
 	//@:native("glfwSetWindowAspectRatio")
 	//@:native("glfwGetWindowFrameSize")
-	//@:native("glfwGetWindowMonitor")
-	//@:native("glfwSetWindowMonitor")
+	@:native("glfwGetWindowMonitor")
+	static function _i_getWindowMonitor(win : Window) : Monitor;
+	@:native("glfwSetWindowMonitor")
+	static function _i_setWindowMonitor(win:Window, monitor : Monitor) : Void;
 	@:native("glfwGetWindowAttrib")
 	static function _i_getAttrib(win : Window, attr : Int) : Int;
 
@@ -211,6 +216,9 @@ extern class Window
 			Pointer.arrayElem(res, 1).raw);
 		return res;
 	}
+	public inline function setWindowSizeLimits(minwidth:Int, minheight:Int, maxwidth:Int, maxheight:Int) : Void {
+		_i_setWindowSizeLimits(this, minwidth, minheight, maxwidth, maxheight);
+	}
 
 	public inline function setPos(x : Int, y : Int) : Void { 
 		_i_setPos(this, x, y); 
@@ -243,6 +251,10 @@ extern class Window
 	}
 	public inline function setCursorPos(x : Float, y : Float) : Void {
 		_i_setCursorPos(this, x, y);
+	}
+
+	public inline function setTitle(title : String) : Void {
+		_i_setWindowTitle(this, title);
 	}
 
 	public inline function getInputMode(mode : Int) : Int return _i_getInputMode(this, mode);
