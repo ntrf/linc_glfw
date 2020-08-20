@@ -15,8 +15,6 @@
 			<compilerflag value="-I${VULKAN_SDK}/Include/" />
 			<compilerflag value="-DGLFW_INCLUDE_VULKAN" />
 		</section>
-
-		<file name="${LINC_GLFW_PATH}linc/linc_glfw.cpp" />
 	</files>
 
 	<files id="linc_glfw">
