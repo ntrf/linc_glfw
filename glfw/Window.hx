@@ -181,8 +181,10 @@ extern class Window
 
 	//@:native("glfwSetCursor")
 
-	//@:native("glfwSetClipboardString")
-	//@:native("glfwGetClipboardString")
+	@:native("glfwSetClipboardString")
+	static function _i_setClipboardString(window : Window, string : cpp.ConstCharStar) : Void;
+	@:native("glfwGetClipboardString")
+	static function _i_getClipboardString(window : Window) : cpp.ConstCharStar;
 
 	@:native("glfwCreateWindow")
 	@:hide
@@ -290,4 +292,7 @@ extern class Window
 	public inline function setCharCallback(fn : CharCb) : Void { ListenerMacro.assign("Char"); }
 	public inline function setCharModsCallback(fn : CharModsCb) : Void { ListenerMacro.assign("CharMods"); }
 	public inline function setDropCallback(fn : DropCb) : Void { ListenerMacro.assign("Drop"); }
+
+	public inline function getClipboard() : String { return _i_getClipboardString(this).toString(); }
+	public inline function setClipboard(value : String) : Void { _i_setClipboardString(this, cast value); }
 }

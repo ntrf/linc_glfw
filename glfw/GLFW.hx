@@ -159,6 +159,16 @@ typedef ErrorCb = (Int, String) -> Void;
 	var KEY_LAST = KEY_MENU;
 }
 
+@:enum abstract KeyMods(Int) from Int to Int {
+	var MOD_SHIFT = 0x0001;
+	var MOD_CONTROL = 0x0002;
+	var MOD_ALT = 0x0004;
+	var MOD_SUPER = 0x0008;
+
+	public inline function isPressed(mods : Int) 
+		return mods & this != 0;
+}
+
 @:enum abstract OpenGLProfile(Int) from Int to Int
 {
 	@:native("GLFW_OPENGL_ANY_PROFILE")
