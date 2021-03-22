@@ -293,6 +293,9 @@ extern class Window
 	public inline function setCharModsCallback(fn : CharModsCb) : Void { ListenerMacro.assign("CharMods"); }
 	public inline function setDropCallback(fn : DropCb) : Void { ListenerMacro.assign("Drop"); }
 
-	public inline function getClipboard() : String { return _i_getClipboardString(this).toString(); }
+	public inline function getClipboard() : Null<String> { 
+		var v = _i_getClipboardString(this);
+		return if (v == null) null else v.toString();
+	}
 	public inline function setClipboard(value : String) : Void { _i_setClipboardString(this, cast value); }
 }
