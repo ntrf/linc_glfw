@@ -41,19 +41,21 @@ class Listener extends cpp.Finalizable
 	// - use window user data to index the listener
 	// - place a pointer with GC root into the user data
 	// - encode event params and then replay them with haxe callbacks
-	static var listeners : Map< Window, Listener > = new Map();
+	static var listeners : Array< Listener > = new Array();
 
 	public static function create(w : Window) {
 		var l = new Listener();
 		l.window = w;
-		listeners.set(w, l);
+		listeners.push(l);
 		return l;
 	}
 	public static function destroy(w : Window) {
-		listeners.remove(w);
+		var i = Lambda.findIndex(listeners, (l) -> l.window == w);
+		if (i < 0) throw "Unknown listener";
+		listeners.splice(i, 1);
 	}
-	public static function get(w : Window) : Listener {
-		return listeners.get(w);
+	public static function get(w : Window) : Null< Listener > {
+		return Lambda.find(listeners, (l) -> l.window == w);
 	}
 
 	override function finalize()

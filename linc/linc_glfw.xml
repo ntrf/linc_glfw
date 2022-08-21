@@ -44,6 +44,18 @@
 			<file name="${LINC_GLFW_PATH}lib/src/wgl_context.c" />
 			<file name="${LINC_GLFW_PATH}lib/src/egl_context.c" />	
 		</section>
+		<section if="linux" unless="wayland">
+			<compilerflag value="-D_GLFW_X11" />
+			<file name="${LINC_GLFW_PATH}lib/src/x11_init.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/x11_monitor.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/x11_window.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/xkb_unicode.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/linux_joystick.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/posix_time.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/posix_tls.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/glx_context.c" />
+			<file name="${LINC_GLFW_PATH}lib/src/egl_context.c" />
+		</section>
 		<section if="mac">
 			<compilerflag value="-D_GLFW_COCOA" />
 			<compilerflag value="-D_GLFW_USE_RETINA" />
@@ -60,12 +72,19 @@
 	</files>
 
 	<target id="haxe">
-        <files id="linc_glfw"/>
+		<files id="linc_glfw"/>
 
 		<section if="windows">
 			<lib name="Shell32.lib" />
 			<lib name="User32.lib" />
 			<lib name="Gdi32.lib" />
+		</section>
+		<section if="linux" unless="wayland">
+			<lib name="-lX11" />
+			<lib name="-lXrandr" />
+			<lib name="-lXinerama" />
+			<lib name="-lXcursor" />
+			<!-- This list is most likely incomplete -->
 		</section>
 		<section if="mac">
 			<vflag name="-framework" value="Cocoa" />

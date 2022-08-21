@@ -22,7 +22,7 @@ class ListenerMacro
 	{
 		var fnName = "on" + name;
 		return macro {
-			var l = listeners.get(w);
+			var l = Listener.get(w);
 			if (l == null || l.$fnName == null) return;
 			l.$fnName($a{args});
 		}
